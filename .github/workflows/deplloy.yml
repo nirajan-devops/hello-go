@@ -13,11 +13,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t go-Hello-world .
+        run: docker build -t go-hello-world .
 
   
       - name: Save Docker image to tar
-        run: docker save go-Hello-world -o go-Hello-world.tar
+        run: docker save go-hello-world -o go-hello-world.tar
 
       - name: Copy image to EC2 via SCP
         uses: appleboy/scp-action@v0.1.4
@@ -25,7 +25,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "Go-Hello-world.tar"
+          source: "go-hello-world.tar"
           target: "/home/${{ secrets.USERNAME }}/"
           tar_dereference: false
           strip_components: false
@@ -51,12 +51,12 @@ jobs:
             cd /home/${{ secrets.USERNAME }}
 
             echo "Loading Docker image..."
-            ls -lh go-Hello-world.tar
-            sudo docker load -i go-Hello-world.tar
+            ls -lh go-hello-world.tar
+            sudo docker load -i go-hello-world.tar
 
             echo "Stopping existing container if running..."
-            sudo docker stop go-Hello-world || true
-            sudo docker rm go-Hello-world || true
+            sudo docker stop go-hello-world || true
+            sudo docker rm go-hello-world || true
 
-            echo "Running new go-Hello-world container..."
-            sudo docker run -d -p 8080:8080 --name go-Hello-world go-Hello-world
+            echo "Running new go-hello-world container..."
+            sudo docker run -d -p 8080:8080 --name go-hello-world go-hello-world
