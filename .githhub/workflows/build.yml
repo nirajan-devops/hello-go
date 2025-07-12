@@ -1,0 +1,12 @@
+name: ci-hello-go
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  use-reusable:
+    uses: <YOUR_GH_USERNAME>/ci-workflows/.github/workflows/Go.yml@main
+    with:
+      go-version: '1.24'   # or 1.22 etc.
+      context: .           # Dockerfile lives at repo root
