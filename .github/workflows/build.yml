@@ -1,4 +1,4 @@
-## hello-go/.github/workflows/build.yml
+### hello-go/.github/workflows/build.yml
 name: go-ci
 
 on:
