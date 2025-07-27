@@ -1,13 +1,21 @@
-### hello-go/.github/workflows/build.yml
-name: go-ci
+name: Deploy Dockerized App    ### This workflow deploys a Dockerized application to an EC2 instance using GitHub Actions.
 
 on:
   push:
     branches: [main]
 
 jobs:
-  call-go-ci:
-    uses: nirajan-devops/ci-workflows/.github/workflows/Go.yml@main
+  deploy:
+    uses: nirajan-devops/ci-workflows/.github/workflows/cicd.yml@main
     with:
-      go-version: '1.24'     # must exist as an `inputs` key in Go.yml
-      context: .             # same here (or remove if you kept the default)
+      image-name: golang-app
+      container-name: golang-app
+      port: "3000"
+      container-port: "8080"
+    secrets:
+      HOST: ${{ secrets.HOST }}
+      USERNAME: ${{ secrets.USERNAME }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
